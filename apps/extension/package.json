@@ -1,0 +1,104 @@
+{
+  "name": "monkey-studio-code",
+  "private": true,
+  "displayName": "monkey-studio-code",
+  "description": "Monkey Studio Code",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.74.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onView:chatSidebar"
+  ],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "chatSidebar",
+          "title": "Monkey Studio Code",
+          "icon": "media/monkey.png"
+        }
+      ]
+    },
+    "views": {
+      "chatSidebar": [
+        {
+          "type": "webview",
+          "id": "chatSidebar",
+          "name": "Monkey Studio Code",
+          "icon": "media/monkey.png",
+          "contextualTitle": "Monkey Studio Code"
+        }
+      ]
+    },
+    "commands": [
+      {
+        "command": "chat-sidebar.sendMessage",
+        "title": "Send message"
+      }
+    ]
+  },
+  "scripts": {
+    "vscode:prepublish": "pnpm run package",
+    "compile": "concurrently \"pnpm run compile:extension\" \"pnpm run compile:webview\"",
+    "compile:extension": "webpack --config webpack.extension.config.js",
+    "compile:webview": "webpack --config webpack.webview.config.js",
+    "watch": "concurrently \"pnpm run watch:extension\" \"pnpm run watch:webview\"",
+    "watch:extension": "pnpm run compile:extension --watch",
+    "watch:webview": "pnpm run compile:webview --watch",
+    "package": "webpack --mode production --devtool hidden-source-map",
+    "compile-tests": "tsc -p . --outDir out",
+    "watch-tests": "tsc -p . -w --outDir out",
+    "pretest": "pnpm run compile-tests && pnpm run compile && pnpm run lint",
+    "lint": "eslint src --ext ts",
+    "test": "node ./out/test/runTest.js"
+  },
+  "devDependencies": {
+    "@sindresorhus/tsconfig": "^3.0.1",
+    "@types/glob": "^8.1.0",
+    "@types/minimist": "^1.2.2",
+    "@types/mocha": "^9.1.0",
+    "@types/node": "^16.11.7",
+    "@types/react": "^18.0.37",
+    "@types/react-dom": "^18.0.11",
+    "@types/vscode": "^1.77.0",
+    "@typescript-eslint/eslint-plugin": "^5.54.0",
+    "@typescript-eslint/parser": "^5.54.0",
+    "@vscode/test-electron": "^2.3.0",
+    "@vscode/vsce": "^2.19.0",
+    "concurrently": "^8.0.1",
+    "eslint": "^8.38.0",
+    "eslint-plugin-unicorn": "^46.0.0",
+    "file-loader": "^6.2.0",
+    "glob": "^8.1.0",
+    "merge-options": "^3.0.4",
+    "mocha": "^9.2.1",
+    "rimraf": "^5.0.0",
+    "semantic-release": "^21.0.1",
+    "semantic-release-vsce": "^5.5.6",
+    "shelljs": "^0.8.5",
+    "ts-loader": "^9.4.2",
+    "typescript": "^5.0.2",
+    "url-loader": "^4.1.1",
+    "webpack": "^5.79.0",
+    "webpack-cli": "^5.0.1"
+  },
+  "publishConfig": {
+    "access": "restricted"
+  },
+  "dependencies": {
+    "@iarna/toml": "^2.2.5",
+    "@vscode/codicons": "^0.0.32",
+    "@vscode/webview-ui-toolkit": "^1.2.2",
+    "cross-fetch": "^3.1.5",
+    "langchain": "0.0.63",
+    "path-browserify": "^1.0.1",
+    "process": "^0.11.10",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  }
+}
