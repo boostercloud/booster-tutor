@@ -3,11 +3,8 @@ import * as process from "node:process";
 import monkeyAgent from "./agent/monkey-agent";
 import * as cp from "node:child_process";
 import "./fetch-polyfill";
-import communicator from "./agent/communicator";
 
 const apiKeyName = "MSC_OPENAI_API_KEY";
-
-let currentFilePath: string | undefined;
 
 async function getApiKey(
   context: vscode.ExtensionContext
@@ -67,17 +64,8 @@ export async function activate(context: vscode.ExtensionContext) {
     console.log(`Node.js version: ${stdout.trim()}`);
   });
 
-  const document = vscode.window.activeTextEditor?.document;
-  if (document && document.uri.scheme === "file") {
-    currentFilePath = document.uri.fsPath;
-  }
-
-  const disposable = vscode.window.onDidChangeActiveTextEditor((editor) => {
-    const document = editor?.document;
-    if (document && document.uri.scheme === "file") {
-      currentFilePath = document.uri.fsPath;
-    }
-  });
+  // eslint-disable-next-line no-unused-vars
+  const disposable = vscode.window.onDidChangeActiveTextEditor((_editor) => {});
 
   context.subscriptions.push(
     vscode.window.registerWebviewViewProvider(
@@ -91,6 +79,7 @@ export async function activate(context: vscode.ExtensionContext) {
 class ChatSidebarViewProvider implements vscode.WebviewViewProvider {
   _view?: vscode.WebviewView;
 
+  // eslint-disable-next-line no-unused-vars
   constructor(private readonly _extensionUri: vscode.Uri) {}
 
   async resolveWebviewView(webviewView: vscode.WebviewView) {
@@ -107,8 +96,6 @@ class ChatSidebarViewProvider implements vscode.WebviewViewProvider {
         content,
       });
     };
-    const communicatorAgent = await communicator(sendMessage);
-    const agent = await monkeyAgent(communicatorAgent);
     this._view = webviewView;
     webviewView.webview.options = {
       enableScripts: true,
@@ -122,8 +109,20 @@ class ChatSidebarViewProvider implements vscode.WebviewViewProvider {
           let response: string;
           try {
             setLoading(true);
-            response = await agent.call(currentFilePath, message.content);
-            await communicatorAgent.call(response);
+            // Perform a call like { "question": "How can I create a command that represents the level up of a player?"} to https://asktoai.boosterframework.com/api/answer using cross-fetch
+            response = await fetch(
+              "https://asktoai.boosterframework.com/api/answer",
+              {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                  question: message.content,
+                }),
+              }
+            ).then((response) => response.text());
+            sendMessage(response);
           } catch (error) {
             const parsedError = error as Error;
             response = `

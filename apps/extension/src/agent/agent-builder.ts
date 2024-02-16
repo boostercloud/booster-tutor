@@ -9,11 +9,13 @@ export default async function () {
     }
 
     private readonly tools: Tool[] = [];
-    private readonly callbacks: ((message: string) => Promise<string>)[] = [];
+    // eslint-disable-next-line no-unused-vars
+    private readonly callbacks: ((_message: string) => Promise<string>)[] = [];
     private memory!: BaseChatMemory;
     private systemMessage?: string;
     private humanMessage?: string;
 
+    // eslint-disable-next-line no-unused-vars
     private constructor(private readonly model: BaseChatModel) {}
 
     withTool(tool: Tool): this {
