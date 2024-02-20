@@ -5,7 +5,11 @@
   "description": "Booster Tutor",
   "version": "0.0.1",
   "engines": {
-    "vscode": "^1.74.0"
+    "vscode": "^1.77.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/boostercloud/booster-tutor"
   },
   "categories": [
     "Other"
@@ -50,7 +54,7 @@
     "watch": "concurrently \"pnpm run watch:extension\" \"pnpm run watch:webview\"",
     "watch:extension": "pnpm run compile:extension --watch",
     "watch:webview": "pnpm run compile:webview --watch",
-    "package": "webpack --mode production --devtool hidden-source-map",
+    "package": "concurrently \"pnpm run compile:extension --mode production --devtool hidden-source-map\" \"pnpm run compile:webview --mode production --devtool hidden-source-map\"",
     "compile-tests": "tsc -p . --outDir out",
     "watch-tests": "tsc -p . -w --outDir out",
     "pretest": "pnpm run compile-tests && pnpm run compile && pnpm run lint",
