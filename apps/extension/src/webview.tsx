@@ -1,6 +1,10 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 import typingSource from "./assets/typing.gif";
+import Markdown from "marked-react";
+import "../media/styles.css";
+import { Element, scroller } from "react-scroll";
+import SyntaxHighlighter from "react-syntax-highlighter";
 
 const {
   VSCodeButton,
@@ -10,6 +14,14 @@ const {
 declare var acquireVsCodeApi: any;
 
 const vscode = acquireVsCodeApi();
+
+const renderer = {
+  code(snippet: string) {
+    return (
+      <SyntaxHighlighter language="typescript">{snippet}</SyntaxHighlighter>
+    );
+  },
+};
 
 const sendMessageToExtension = (message: string) => {
   vscode.postMessage(
@@ -24,7 +36,10 @@ const sendMessageToExtension = (message: string) => {
 type From = "user" | "bot";
 
 class ChatMessage {
-  constructor(readonly from: From, readonly contents: string) {}
+  constructor(
+    readonly from: From,
+    readonly contents: string
+  ) {}
 }
 
 type ChatBubbleProperties = { message: ChatMessage };
@@ -43,8 +58,14 @@ const ChatBubble: React.FC<ChatBubbleProperties> = ({ message }) => {
   };
   const alignStyle =
     message.from === "bot"
-      ? { backgroundColor: "var(--vscode-button-secondaryBackground)" }
-      : { backgroundColor: "var(--vscode-button-background)" };
+      ? {
+          backgroundColor: "var(--vscode-button-secondaryBackground)",
+          color: "var(--vscode-button-secondaryForeground)",
+        }
+      : {
+          backgroundColor: "var(--vscode-button-background)",
+          color: "var(--vscode-button-foreground)",
+        };
   const containerStyle = {
     display: "flex",
     justifyContent: message.from === "bot" ? "flex-start" : "flex-end",
@@ -52,7 +73,9 @@ const ChatBubble: React.FC<ChatBubbleProperties> = ({ message }) => {
   return (
     <div style={containerStyle}>
       <div style={{ ...bubbleStyle, ...alignStyle }}>
-        <div style={{ whiteSpace: "pre-wrap" }}>{message.contents}</div>
+        <div style={{ whiteSpace: "pre-wrap" }}>
+          <Markdown value={message.contents} renderer={renderer} />
+        </div>
       </div>
     </div>
   );
@@ -60,21 +83,28 @@ const ChatBubble: React.FC<ChatBubbleProperties> = ({ message }) => {
 
 export const App: React.FC = () => {
   const [userMessage, setUserMessage] = React.useState("");
-  const [chatMessages, setChatMessages] = React.useState<Array<ChatMessage>>(
-    []
-  );
+  const [chatMessages, setChatMessages] = React.useState<Array<ChatMessage>>([
+    new ChatMessage(
+      "user",
+      "**Lorem ipsum** dolor sit amet, consectetur adipiscing elit. Nulla nec odio nec nunc"
+    ),
+  ]);
   const [loading, setLoading] = React.useState(false);
-  const appendChatMessage = (message: ChatMessage) =>
+  const appendChatMessage = async (message: ChatMessage) => {
     setChatMessages((previousChatMessages) => [
       ...previousChatMessages,
       message,
     ]);
+    scroller.scrollTo("lastMessage", {
+      containerId: "messages-root",
+    });
+  };
 
   React.useEffect(() => {
     const sendInitialMessage = () => {
       setTimeout(() => {
         sendMessageToExtension(
-          "Hello, what's your name and how can you help me?"
+          "Greet me and give me a one paragraph detailed description of how can you help me with my Booster project. Use markdown to highlight the important parts."
         );
       }, 500);
     };
@@ -119,9 +149,14 @@ export const App: React.FC = () => {
           display: "flex",
           flexDirection: "column",
         }}
+        id="messages-root"
       >
-        {chatMessages.map((message) => (
-          <ChatBubble key={message.contents} message={message} />
+        {chatMessages.map((message, index) => (
+          <Element
+            name={index === chatMessages.length - 1 ? "lastMessage" : ""}
+          >
+            <ChatBubble key={message.contents} message={message} />
+          </Element>
         ))}
         <img
           style={{

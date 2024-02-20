@@ -4,6 +4,10 @@ body {
   padding: 0;
 }
 
+code {
+  background-color: transparent !important;
+}
+
 #chat-container {
   display: flex;
   flex-direction: column;

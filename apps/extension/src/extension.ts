@@ -1,6 +1,5 @@
 import * as vscode from "vscode";
 import * as process from "node:process";
-import monkeyAgent from "./agent/monkey-agent";
 import * as cp from "node:child_process";
 import "./fetch-polyfill";
 
@@ -38,7 +37,7 @@ export async function activate(context: vscode.ExtensionContext) {
     return;
   }
 
-  const outputChannel = vscode.window.createOutputChannel("Monkey Studio Code");
+  const outputChannel = vscode.window.createOutputChannel("Booster Tutor");
   context.subscriptions.push(outputChannel);
 
   const myCustomConsole = {
@@ -109,7 +108,6 @@ class ChatSidebarViewProvider implements vscode.WebviewViewProvider {
           let response: string;
           try {
             setLoading(true);
-            // Perform a call like { "question": "How can I create a command that represents the level up of a player?"} to https://asktoai.boosterframework.com/api/answer using cross-fetch
             response = await fetch(
               "https://asktoai.boosterframework.com/api/answer",
               {
