@@ -69,7 +69,7 @@ jobs:
       - name: Install dependencies
         run: |
           pnpm install
-          pnpm i -g @vscode/vsce
+          pnpm i -g @vscode/vsce concurrently
 
       - name: Compile
         run: pnpm compile
