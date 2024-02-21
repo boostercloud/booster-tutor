@@ -100,8 +100,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          file: "*.vsix"
-          delete_file: "*.vsix"
+          file: "**/*.vsix"
+          delete_file: "**/*.vsix"
           release_id: ${{ steps.create_release.outputs.id }}
           overwrite: true
           verbose: true
