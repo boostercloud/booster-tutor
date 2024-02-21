@@ -85,8 +85,9 @@ export const App: React.FC = () => {
   const [userMessage, setUserMessage] = React.useState("");
   const [chatMessages, setChatMessages] = React.useState<Array<ChatMessage>>([
     new ChatMessage(
-      "user",
-      "**Lorem ipsum** dolor sit amet, consectetur adipiscing elit. Nulla nec odio nec nunc"
+      "bot",
+      `## Hello! 🚀
+    I'm thrilled to assist you with your Booster project! Whether you need guidance on **contributing to Booster**, getting health information from sensors, finding **beginner-friendly or more involved coding tasks**, improving documentation, creating GitHub issues, suggesting enhancements, or even just asking a quick question in the community, **I've got you covered!** Feel free to explore the Booster documentation for detailed instructions and resources, and don't hesitate to reach out if you need any further assistance. **Let's boost your project together!** 🌟`
     ),
   ]);
   const [loading, setLoading] = React.useState(false);
@@ -101,13 +102,6 @@ export const App: React.FC = () => {
   };
 
   React.useEffect(() => {
-    const sendInitialMessage = () => {
-      setTimeout(() => {
-        sendMessageToExtension(
-          "Greet me and give me a one paragraph detailed description of how can you help me with my Booster project. Use markdown to highlight the important parts."
-        );
-      }, 500);
-    };
     const listener = (event: MessageEvent) => {
       if (event.data.type === "from-bot") {
         const message = new ChatMessage("bot", event.data.content);
@@ -121,7 +115,6 @@ export const App: React.FC = () => {
     };
 
     window.addEventListener("message", listener);
-    window.addEventListener("load", sendInitialMessage);
     return () => window.removeEventListener("message", listener);
   }, []);
 

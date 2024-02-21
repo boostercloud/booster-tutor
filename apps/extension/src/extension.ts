@@ -1,41 +1,41 @@
 import * as vscode from "vscode";
-import * as process from "node:process";
+// import * as process from "node:process";
 import * as cp from "node:child_process";
 import "./fetch-polyfill";
 
-const apiKeyName = "MSC_OPENAI_API_KEY";
+// const apiKeyName = "MSC_OPENAI_API_KEY";
 
-async function getApiKey(
-  context: vscode.ExtensionContext
-): Promise<string | undefined> {
-  const apiKey = context.globalState.get<string>(apiKeyName);
+// async function getApiKey(
+//   context: vscode.ExtensionContext
+// ): Promise<string | undefined> {
+//   const apiKey = context.globalState.get<string>(apiKeyName);
 
-  if (apiKey) {
-    return apiKey;
-  }
+//   if (apiKey) {
+//     return apiKey;
+//   }
 
-  const inputApiKey = await vscode.window.showInputBox({
-    prompt: "Enter your OpenAI API key",
-    placeHolder: "OpenAI API key",
-    ignoreFocusOut: true,
-    password: true,
-  });
+//   const inputApiKey = await vscode.window.showInputBox({
+//     prompt: "Enter your OpenAI API key",
+//     placeHolder: "OpenAI API key",
+//     ignoreFocusOut: true,
+//     password: true,
+//   });
 
-  if (inputApiKey) {
-    await context.globalState.update(apiKeyName, inputApiKey);
-  }
+//   if (inputApiKey) {
+//     await context.globalState.update(apiKeyName, inputApiKey);
+//   }
 
-  return inputApiKey;
-}
+//   return inputApiKey;
+// }
 
 export async function activate(context: vscode.ExtensionContext) {
   console.log('Congratulations, your extension "chat-sidebar" is now active!');
 
-  const apiKey = await getApiKey(context);
-  if (!apiKey) {
-    vscode.window.showErrorMessage("API key is required");
-    return;
-  }
+  // const apiKey = await getApiKey(context);
+  // if (!apiKey) {
+  //   vscode.window.showErrorMessage("API key is required");
+  //   return;
+  // }
 
   const outputChannel = vscode.window.createOutputChannel("Booster Tutor");
   context.subscriptions.push(outputChannel);
@@ -47,7 +47,7 @@ export async function activate(context: vscode.ExtensionContext) {
 
   global.console = { ...console, ...myCustomConsole };
 
-  process.env["OPENAI_API_KEY"] = apiKey;
+  // process.env["OPENAI_API_KEY"] = apiKey;
 
   cp.exec("node --version", (error, stdout, stderr) => {
     if (error) {
