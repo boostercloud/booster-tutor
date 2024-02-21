@@ -67,6 +67,7 @@ jobs:
             ${{ runner.os }}-pnpm-store-
 
       - name: Install dependencies
+        working-directory: apps/extension
         run: |
           pnpm install
           pnpm i -g @vscode/vsce concurrently
