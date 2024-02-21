@@ -81,8 +81,10 @@ jobs:
           node-version: 18
 
       - name: Generate VSIX
-        run: pnpm vsce package --no-dependencies
         working-directory: apps/extension
+        run: |
+          pnpm i
+          pnpm vsce package --no-dependencies
 
       - name: Create Release
         id: create_release
