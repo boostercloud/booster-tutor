@@ -87,7 +87,8 @@ export const App: React.FC = () => {
     new ChatMessage(
       "bot",
       `## Hello! 🚀
-    I'm thrilled to assist you with your Booster project! Whether you need guidance on **contributing to Booster**, getting health information from sensors, finding **beginner-friendly or more involved coding tasks**, improving documentation, creating GitHub issues, suggesting enhancements, or even just asking a quick question in the community, **I've got you covered!** Feel free to explore the Booster documentation for detailed instructions and resources, and don't hesitate to reach out if you need any further assistance. **Let's boost your project together!** 🌟`
+
+I'm thrilled to assist you with your Booster project! Whether you need guidance on **contributing to Booster**, getting health information from sensors, finding **beginner-friendly or more involved coding tasks**, improving documentation, creating GitHub issues, suggesting enhancements, or even just asking a quick question in the community, **I've got you covered!** Feel free to explore the Booster documentation for detailed instructions and resources, and don't hesitate to reach out if you need any further assistance. **Let's boost your project together!** 🌟`
     ),
   ]);
   const [loading, setLoading] = React.useState(false);
