@@ -108,7 +108,7 @@ class ChatSidebarViewProvider implements vscode.WebviewViewProvider {
           let response: string;
           try {
             setLoading(true);
-            response = await fetch("http://localhost:8080/answer", {
+            response = await fetch("http://localhost:8232/answer", {
               method: "POST",
               headers: {
                 "Content-Type": "application/json",

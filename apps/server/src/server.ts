@@ -11,7 +11,7 @@ server.post("/answer", async (req: any) => {
   return `Hello from local the server! Your question is: ${question}`;
 });
 
-server.listen({ port: 8080 }, (err, address) => {
+server.listen({ port: 8232 }, (err, address) => {
   if (err) {
     console.error(err);
     process.exit(1);
