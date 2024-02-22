@@ -6,6 +6,11 @@ server.get("/ping", async () => {
   return "pong\n";
 });
 
+server.post("/answer", async (req: any) => {
+  const { question } = req.body;
+  return `Hello from local the server! Your question is: ${question}`;
+});
+
 server.listen({ port: 8080 }, (err, address) => {
   if (err) {
     console.error(err);
