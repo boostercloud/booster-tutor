@@ -119,7 +119,13 @@ class ChatSidebarViewProvider implements vscode.WebviewViewProvider {
                   question: message.content,
                 }),
               }
-            ).then((response) => response.text());
+            )
+              .then((response) => response.text())
+              // Trim triple backticks
+              .then((text) => {
+                console.log("Received response:", text);
+                return text.replace(/^`{3}[a-zA-Z]*/, "").replace(/`{3}$/, "");
+              });
             sendMessage(response);
           } catch (error) {
             const parsedError = error as Error;
