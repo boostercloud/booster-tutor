@@ -108,18 +108,15 @@ class ChatSidebarViewProvider implements vscode.WebviewViewProvider {
           let response: string;
           try {
             setLoading(true);
-            response = await fetch(
-              "https://asktoai.boosterframework.com/api/answer",
-              {
-                method: "POST",
-                headers: {
-                  "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                  question: message.content,
-                }),
-              }
-            ).then((response) => response.text());
+            response = await fetch("http://localhost:8232/answer", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                question: message.content,
+              }),
+            }).then((response) => response.text());
             sendMessage(response);
           } catch (error) {
             const parsedError = error as Error;
