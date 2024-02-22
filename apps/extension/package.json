@@ -3,7 +3,7 @@
   "private": true,
   "displayName": "Booster Tutor",
   "description": "An AI assistant to help you with your Booster application",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "publisher": "BoosterFramework",
   "icon": "icon.png",
   "engines": {
