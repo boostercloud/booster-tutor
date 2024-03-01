@@ -6,10 +6,34 @@ server.get("/ping", async () => {
   return "pong\n";
 });
 
-server.post("/answer", async (req: any) => {
-  const { question } = req.body;
-  return `Hello from local the server! Your question is: ${question}`;
-});
+server.post<{ Body: { question: string } }>(
+  "/answer",
+  async (request, response) => {
+    const { question } = request.body;
+
+    try {
+      const answer = await fetch(
+        "https://asktoai.boosterframework.com/api/answer",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ question: question }),
+        }
+      );
+
+      if (!answer.ok) {
+        throw new Error(`Error from API: ${answer.statusText}`);
+      }
+
+      return answer;
+    } catch (error) {
+      request.log.error(error);
+      return response
+        .code(500)
+        .send({ error: "There has been an error processing your request" });
+    }
+  }
+);
 
 server.listen({ port: 8232 }, (err, address) => {
   if (err) {
