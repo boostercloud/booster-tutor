@@ -2,10 +2,6 @@ import fastify from "fastify";
 
 const server = fastify();
 
-server.get("/ping", async () => {
-  return "pong\n";
-});
-
 server.post<{ Body: { question: string } }>(
   "/answer",
   async (request, response) => {
