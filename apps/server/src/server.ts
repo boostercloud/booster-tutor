@@ -24,9 +24,10 @@ server.post<{ Body: { question: string } }>(
       return answer;
     } catch (error) {
       request.log.error(error);
-      return response
-        .code(500)
-        .send({ error: "There has been an error processing your request" });
+      return response.code(500).send({
+        error: `Yikes! It seems we've hit a snag on our side, causing a bit of a hiccup.
+            This is a bit embarrassing, but not to worry, we're on it and hoping to smooth things out soon."`,
+      });
     }
   }
 );
