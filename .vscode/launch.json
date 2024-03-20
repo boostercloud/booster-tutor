@@ -14,15 +14,6 @@
       "preLaunchTask": "${defaultBuildTask}"
     },
     {
-      "name": "Run Server",
-      "type": "node",
-      "request": "launch",
-      "cwd": "${workspaceFolder}/apps/server",
-      "runtimeExecutable": "npm",
-      "runtimeArgs": ["run", "start"],
-      "autoAttachChildProcesses": true
-    },
-    {
       "name": "Extension Tests",
       "type": "extensionHost",
       "request": "launch",
@@ -35,13 +26,6 @@
         "${workspaceFolder}/apps/extension/dist/**/*.js"
       ],
       "preLaunchTask": "tasks: watch-tests"
-    }
-  ],
-  "compounds": [
-    {
-      "name": "Run Extension and Server",
-      "configurations": ["Run Server", "Run Extension"],
-      "default": true
     }
   ]
 }
