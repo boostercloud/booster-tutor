@@ -1,8 +1,11 @@
 {
   "name": "@boostercloud/booster-tutor-server",
-  "version": "0.0.1",
+  "version": "0.0.4",
   "description": "",
   "main": "./dist/server.js",
+  "bin": {
+    "booster-tutor-server": "./dist/server.js"
+  },
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "start": "npm run build && node ./dist/server.js",
