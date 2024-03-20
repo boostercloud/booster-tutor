@@ -14,6 +14,15 @@
       "preLaunchTask": "${defaultBuildTask}"
     },
     {
+      "name": "Run Server",
+      "type": "node",
+      "request": "launch",
+      "cwd": "${workspaceFolder}/apps/server",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "start"],
+      "autoAttachChildProcesses": true
+    },
+    {
       "name": "Extension Tests",
       "type": "extensionHost",
       "request": "launch",
