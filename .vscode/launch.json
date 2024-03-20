@@ -36,5 +36,12 @@
       ],
       "preLaunchTask": "tasks: watch-tests"
     }
+  ],
+  "compounds": [
+    {
+      "name": "Run Extension and Server",
+      "configurations": ["Run Server", "Run Extension"],
+      "default": true
+    }
   ]
 }
