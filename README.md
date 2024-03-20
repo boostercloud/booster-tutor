@@ -1,79 +1,39 @@
-# Turborepo starter
+# Booster Tutor
 
-This is an official starter Turborepo.
+This is the official Booster Tutor VSCode extension for speeding up the learning process while using Booster thanks to the power of IA.
 
-## Using this example
+## Prerequisites
 
-Run the following command:
+Before getting started, make sure you have the following prerequisites installed:
 
-```sh
-npx create-turbo@latest
-```
+- Node.js (version v18 or higher)
+- npm (version v10 or higher)
+- pnpm (version v8 or higher)
 
-## What's inside?
+To install Node.js and npm, you can visit the official Node.js website and follow the installation instructions for your operating system.
 
-This Turborepo includes the following packages/apps:
+To install `pnpm`, you can run the following command:
 
-### Apps and Packages
+    npm i -g pnpm
 
-- `extension`: a VSCode extension
-- `@repo/eslint-config`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
-- `@repo/typescript-config`: `tsconfig.json`s used throughout the monorepo
+## Getting started
 
-Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
+First clone the repository in your local machine, and get familiarized on the structure. You can find the different projects inside the apps directory.
 
-### Utilities
+Then navigate to each project and install the packages with the following command:
 
-This Turborepo has some additional tools already setup for you:
+    pnpm i
 
-- [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting
+## Troubleshooting
 
-### Build
+If you encounter any issues while setting up or using the Booster Tutor extension, here are some troubleshooting steps you can try:
 
-To build all apps and packages, run the following command:
+1. **Ensure all prerequisites are installed**: Double-check that you have Node.js, npm, and pnpm installed at the required versions mentioned in the Prerequisites section.
 
-```
-cd my-turborepo
-pnpm build
-```
+2. **Upgrade icu4c library**: If you see the error message **"If Library not loaded: /usr/local/opt/icu4c/lib/libicui18n.69.dylib"** on MacOS, you can try running the following command to upgrade the icu4c library:
 
-### Develop
+   ```bash
+   brew upgrade icu4c
+   ```
 
-To develop all apps and packages, run the following command:
-
-```
-cd my-turborepo
-pnpm dev
-```
-
-### Remote Caching
-
-Turborepo can use a technique known as [Remote Caching](https://turbo.build/repo/docs/core-concepts/remote-caching) to share cache artifacts across machines, enabling you to share build caches with your team and CI/CD pipelines.
-
-By default, Turborepo will cache locally. To enable Remote Caching you will need an account with Vercel. If you don't have an account you can [create one](https://vercel.com/signup), then enter the following commands:
-
-```
-cd my-turborepo
-npx turbo login
-```
-
-This will authenticate the Turborepo CLI with your [Vercel account](https://vercel.com/docs/concepts/personal-accounts/overview).
-
-Next, you can link your Turborepo to your Remote Cache by running the following command from the root of your Turborepo:
-
-```
-npx turbo link
-```
-
-## Useful Links
-
-Learn more about the power of Turborepo:
-
-- [Tasks](https://turbo.build/repo/docs/core-concepts/monorepos/running-tasks)
-- [Caching](https://turbo.build/repo/docs/core-concepts/caching)
-- [Remote Caching](https://turbo.build/repo/docs/core-concepts/remote-caching)
-- [Filtering](https://turbo.build/repo/docs/core-concepts/monorepos/filtering)
-- [Configuration Options](https://turbo.build/repo/docs/reference/configuration)
-- [CLI Usage](https://turbo.build/repo/docs/reference/command-line-reference)
+If none of the above steps resolve your issue, please consider reaching out to the project maintainers for further assistance.
