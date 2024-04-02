@@ -63,6 +63,20 @@ export async function activate(context: vscode.ExtensionContext) {
     console.log(`Node.js version: ${stdout.trim()}`);
   });
 
+  cp.exec("npx @boostercloud/booster-tutor-server", (error, stdout, stderr) => {
+    if (error) {
+      console.error(
+        `Error executing 'npx @boostercloud/booster-tutor-server': ${error.message}`
+      );
+      return;
+    }
+    if (stderr) {
+      console.error(`Error message: ${stderr}`);
+      return;
+    }
+    console.log(`Server started: ${stdout.trim()}`);
+  });
+
   // eslint-disable-next-line no-unused-vars
   const disposable = vscode.window.onDidChangeActiveTextEditor((_editor) => {});
 
