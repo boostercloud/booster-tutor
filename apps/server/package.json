@@ -1,6 +1,6 @@
 {
   "name": "@boostercloud/booster-tutor-server",
-  "version": "0.0.4",
+  "version": "0.0.51",
   "description": "",
   "main": "./dist/server.js",
   "bin": {
@@ -16,10 +16,20 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@types/node": "^20.11.19",
+    "@types/better-sqlite3": "^7.6.10",
+    "@types/node": "^20.12.4",
+    "@types/react": "18.2.79",
     "typescript": "^5.3.3"
   },
   "dependencies": {
-    "fastify": "^4.26.1"
+    "@fastify/formbody": "^7.0.0",
+    "better-sqlite3": "^9.6.0",
+    "csvtojson": "^2.0.10",
+    "dotenv": "^16.4.5",
+    "eventsource-parser": "^1.1.2",
+    "fastify": "^4.26.1",
+    "gpt3-tokenizer": "^1.1.5",
+    "graphql-request": "^6.1.0",
+    "sqlite-vss": "^0.1.2"
   }
 }
