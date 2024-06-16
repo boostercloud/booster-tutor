@@ -1,7 +1,12 @@
 {
   "extends": "@repo/typescript-config/base.json",
   "compilerOptions": {
+    "esModuleInterop": true,
     "outDir": "dist",
-    "rootDir": "src"
-  }
+    "rootDir": "src",
+    "allowJs": true,
+    "jsx": "preserve"
+  },
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
+  "exclude": ["node_modules", "dist"]
 }
