@@ -2,9 +2,12 @@ import Database from "better-sqlite3";
 import PageSectionMatch from "../types/page-section-match";
 import Page from "../types/page";
 import PageSection from "../types/page-section";
+import { dbPath, dbDirectory } from "../database/dbConfig";
+import { ensureDirectoryExists } from "../database/dbHelpers";
 
 // Open SQLite database
-const db = new Database("database.sqlite");
+ensureDirectoryExists(dbDirectory);
+const db = new Database(dbPath);
 
 export class SQLiteService {
   static sectionMatchThreshold = parseFloat(

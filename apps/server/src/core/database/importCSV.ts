@@ -1,6 +1,8 @@
 import Database from "better-sqlite3";
 import csvtojson from "csvtojson";
 import path from "path";
+import { dbPath, dbDirectory } from "./dbConfig";
+import { ensureDirectoryExists } from "./dbHelpers";
 
 // Paths to your CSV files relative to the project root
 const pagesCSVPath = path.resolve(
@@ -13,7 +15,8 @@ const pagesMatchCSVPath = path.resolve(
 );
 
 // Open SQLite database
-const db = new Database("database.sqlite");
+ensureDirectoryExists(dbDirectory);
+const db = new Database(dbPath);
 
 // Create tables with explicit IDs
 db.exec(`
