@@ -23,14 +23,25 @@ const handler = async (req: Request): Promise<Response> => {
 
   if (!question) return new Response("No question provided", { status: 400 });
 
+  const { sectionMatchThreshold, sectionMatchCount, sectionMinContentLength } =
+    req.body as {
+      sectionMatchThreshold?: string;
+      sectionMatchCount?: string;
+      sectionMinContentLength?: string;
+    };
+
   const boosterService = new BoosterService(
     productionEnvironment.boosterEndpoint
   );
   const questionId = await boosterService.askQuestion(question);
 
   const { embedding } = await OpenAIService.generateEmbedding(question);
-  // const matchingSections = await SupabaseService.getMatchingContext(embedding);
-  const matchingSections = await SQLiteService.getMatchingContext(embedding);
+  const matchingSections = await SQLiteService.getMatchingContext(
+    embedding,
+    sectionMatchThreshold,
+    sectionMatchCount,
+    sectionMinContentLength
+  );
   const prompt = OpenAIService.generatePromptFromPagesContext(
     CodeCompletion.systemInstruction,
     question,

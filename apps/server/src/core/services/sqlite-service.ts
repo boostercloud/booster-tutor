@@ -73,9 +73,9 @@ export class SQLiteService {
 
   static async getMatchingContext(
     embedding: number[],
-    threshold: string,
-    count: string,
-    minLength: string
+    threshold: string | undefined,
+    count: string | undefined,
+    minLength: string | undefined
   ): Promise<PageSectionMatch[]> {
     const matchThreshold = parseFloat(threshold || this.sectionMatchThreshold);
     const matchCount = parseInt(count || this.sectionMatchCount);
@@ -91,11 +91,18 @@ export class SQLiteService {
       FROM page_sections ps
       JOIN pages p ON ps.page_id = p.id
       WHERE LENGTH(ps.content) >= ? 
+      AND (ps.embedding - ?) < ?
       ORDER BY similarity 
       LIMIT ?
     `);
 
-    const rows = stmt.all(buffer, matchThreshold, matchCount);
+    const rows = stmt.all(
+      buffer,
+      minContentLength,
+      embedding,
+      matchThreshold,
+      matchCount
+    );
 
     return rows.map((row: any) => ({
       path: row.path,
