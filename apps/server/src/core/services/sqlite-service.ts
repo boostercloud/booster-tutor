@@ -10,15 +10,11 @@ ensureDirectoryExists(dbDirectory);
 const db = new Database(dbPath);
 
 export class SQLiteService {
-  static sectionMatchThreshold = parseFloat(
-    process.env["SECTION_MATCH_THRESHOLD"] || "0.78"
-  );
-  static sectionMatchCount = parseInt(
-    process.env["SECTION_MATCH_COUNT"] || "10"
-  );
-  static sectionMinContentLength = parseInt(
-    process.env["SECTION_MIN_CONTENT_LENGTH"] || "50"
-  );
+  static sectionMatchThreshold =
+    process.env["SECTION_MATCH_THRESHOLD"] || "0.78";
+  static sectionMatchCount = process.env["SECTION_MATCH_COUNT"] || "10";
+  static sectionMinContentLength =
+    process.env["SECTION_MIN_CONTENT_LENGTH"] || "50";
 
   static async getPage(id: string): Promise<Page | undefined> {
     const stmt = db.prepare("SELECT * FROM pages WHERE id = ?");
@@ -76,8 +72,17 @@ export class SQLiteService {
   }
 
   static async getMatchingContext(
-    embedding: number[]
+    embedding: number[],
+    threshold: string,
+    count: string,
+    minLength: string
   ): Promise<PageSectionMatch[]> {
+    const matchThreshold = parseFloat(threshold || this.sectionMatchThreshold);
+    const matchCount = parseInt(count || this.sectionMatchCount);
+    const minContentLength = parseInt(
+      minLength || this.sectionMinContentLength
+    );
+
     const buffer = Buffer.from(new Float32Array(embedding).buffer);
 
     const stmt = db.prepare(`
@@ -90,11 +95,7 @@ export class SQLiteService {
       LIMIT ?
     `);
 
-    const rows = stmt.all(
-      buffer,
-      this.sectionMinContentLength,
-      this.sectionMatchCount
-    );
+    const rows = stmt.all(buffer, matchThreshold, matchCount);
 
     return rows.map((row: any) => ({
       path: row.path,

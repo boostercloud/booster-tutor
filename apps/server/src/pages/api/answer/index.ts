@@ -23,6 +23,13 @@ const handler = async (req: FastifyRequest): Promise<Response> => {
 
   if (!question) return new Response("No question provided", { status: 400 });
 
+  const { sectionMatchThreshold, sectionMatchCount, sectionMinContentLength } =
+    req.body as {
+      sectionMatchThreshold?: string;
+      sectionMatchCount?: string;
+      sectionMinContentLength?: string;
+    };
+
   const boosterService = new BoosterService(
     productionEnvironment.boosterEndpoint
   );
@@ -30,7 +37,12 @@ const handler = async (req: FastifyRequest): Promise<Response> => {
 
   const { embedding } = await OpenAIService.generateEmbedding(question);
 
-  const matchingSections = await SQLiteService.getMatchingContext(embedding);
+  const matchingSections = await SQLiteService.getMatchingContext(
+    embedding,
+    sectionMatchThreshold,
+    sectionMatchCount,
+    sectionMinContentLength
+  );
 
   const prompt = OpenAIService.generatePromptFromPagesContext(
     QuestionAnswering.systemInstruction,
