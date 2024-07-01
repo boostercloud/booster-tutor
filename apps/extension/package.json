@@ -46,7 +46,27 @@
         "command": "chat-sidebar.sendMessage",
         "title": "Send message"
       }
-    ]
+    ],
+    "configuration": {
+      "type": "object",
+      "title": "Booster Tutor",
+      "properties": {
+        "booster-tutor.env" : {
+          "type": "object",
+          "title": "Environment variables",
+          "default": {
+            "OPENAI_MAX_TOKENS_CONTEXT": null,
+            "OPENAI_MAX_TOKENS_COMPLETION": null,
+            "OPENAI_MAX_TOKENS_EMBEDDING": null,
+            "SECTION_MATCH_THRESHOLD": "0.78",
+            "SECTION_MATCH_COUNT": "10",
+            "SECTION_MIN_CONTENT_LENGTH": "50",
+            "ENABLE_RATE_LIMIT": "false"
+          }
+        }
+      },
+      "description": "Configure the Booster Tutor extension"
+    }
   },
   "scripts": {
     "vscode:prepublish": "pnpm run package",

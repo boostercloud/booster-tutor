@@ -96,6 +96,13 @@ class ChatSidebarViewProvider implements vscode.WebviewViewProvider {
   constructor(private readonly _extensionUri: vscode.Uri) {}
 
   async resolveWebviewView(webviewView: vscode.WebviewView) {
+    const config = vscode.workspace.getConfiguration("booster-tutor");
+    const envVars = config.get<{ [key: string]: string }>("env");
+
+    const sectionMatchThreshold = envVars?.["SECTION_MATCH_THRESHOLD"];
+    const sectionMatchCount = envVars?.["SECTION_MATCH_COUNT"];
+    const sectionMinContentLength = envVars?.["SECTION_MIN_CONTENT_LENGTH"];
+
     const sendMessage = (message: string) => {
       webviewView.webview.postMessage({
         type: "from-bot",
@@ -129,6 +136,9 @@ class ChatSidebarViewProvider implements vscode.WebviewViewProvider {
               },
               body: JSON.stringify({
                 question: message.content,
+                sectionMatchThreshold,
+                sectionMatchCount,
+                sectionMinContentLength,
               }),
             })
               .then((response) => response.text())
