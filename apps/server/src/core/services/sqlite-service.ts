@@ -73,9 +73,9 @@ export class SQLiteService {
 
   static async getMatchingContext(
     embedding: number[],
-    threshold: string | undefined,
-    count: string | undefined,
-    minLength: string | undefined
+    threshold?: string,
+    count?: string,
+    minLength?: string
   ): Promise<PageSectionMatch[]> {
     const matchThreshold = parseFloat(threshold || this.sectionMatchThreshold);
     const matchCount = parseInt(count || this.sectionMatchCount);
